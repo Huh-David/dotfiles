@@ -16,7 +16,7 @@ installPackage() {
     fi
 }
 
-general_packages="zsh git zsh-autosuggestions zoxide fzf stow eza"
+general_packages="zsh git zsh-autosuggestions zoxide fzf stow eza bat"
 
 if isMac; then
     installPackage "brew" "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
