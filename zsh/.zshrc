@@ -102,6 +102,10 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+isMac() {
+    [ "$(uname)" == "Darwin" ]
+}
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -109,7 +113,7 @@ export NVM_DIR="$HOME/.nvm"
 # Load Angular CLI autocompletion.
 source <(ng completion script)
 
-if [ -d "/opt/homebrew/opt/openjdk/bin" ]; then
+if isMac; then
   export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 fi
 
@@ -126,17 +130,23 @@ alias y='z'
 
 # eza (maintained version of exa, a modern replacement for ls)
 # if mac, use eza, else use exa
-# alias ls='eza -lh'
-if [[ "$OSTYPE" == "darwin"* ]]; then
+if isMac; then
   alias ls='eza -lh'
 else
   alias ls='exa -lh'
 fi
 
 # bat (a cat clone with wings)
-alias cat='bat'
+if isMac; then
+  alias cat='bat'
+else 
+  alias cat='batcat'
+fi
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
 
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+if isMac; then
+  source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
