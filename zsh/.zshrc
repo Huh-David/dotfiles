@@ -172,19 +172,38 @@ print_header() {
   fi
 }
 
-# Print out system information
-print_header "System Information"
-print_line "OS: $(uname)"
-print_line "Shell: $SHELL"
-print_line "ZSH version: $ZSH_VERSION"
-print_line "Username: $(whoami)"
-print_header "Hardware"
-print_line "CPU: $(sysctl -n machdep.cpu.brand_string)"
-print_line "Memory: $(sysctl -n hw.memsize)"
-print_line "Disk: $(df -h / | awk 'NR==2{print $4}')"
-print_line "Uptime: $(uptime | awk '{print $3,$4}' | sed 's/,//')"
-print_line "Battery: $(pmset -g batt | grep -Eo '\d+%' | cut -d% -f1)"
-print_header "Network"
-print_line "Hostname: $(hostname)"
-print_line "IP: $(ipconfig getifaddr en0)"
-print_header ""
+
+
+    # Print out system information
+if [ "$(uname)" = "Darwin" ]; then
+    print_header "System Information"
+    print_line "OS: $(uname)"
+    print_line "Shell: $SHELL"
+    print_line "ZSH version: $ZSH_VERSION"
+    print_line "Username: $(whoami)"
+    print_header "Hardware"
+    print_line "CPU: $(sysctl -n machdep.cpu.brand_string)"
+    print_line "Memory: $(sysctl -n hw.memsize)"
+    print_line "Disk: $(df -h / | awk 'NR==2{print $4}')"
+    print_line "Uptime: $(uptime | awk '{print $3,$4}' | sed 's/,//')"
+    print_line "Battery: $(pmset -g batt | grep -Eo '\d+%' | cut -d% -f1)"
+    print_header "Network"
+    print_line "Hostname: $(hostname)"
+    print_line "IP: $(ipconfig getifaddr en0)"
+    print_header ""
+else 
+    print_header "System Information"
+    print_line "OS: $(uname)"
+    print_line "Shell: $SHELL"
+    print_line "ZSH version: $ZSH_VERSION"
+    print_line "Username: $(whoami)"
+    print_header "Hardware"
+    print_line "CPU: $(lscpu | grep 'Model name' | awk '{print $3,$4,$5,$6,$7,$8}')"
+    print_line "Memory: $(free -h | awk 'NR==2{print $2}')"
+    print_line "Disk: $(df -h / | awk 'NR==2{print $4}')"
+    print_line "Uptime: $(uptime | awk '{print $3,$4}' | sed 's/,//')"
+    print_header "Network"
+    print_line "Hostname: $(hostname)"
+    print_line "IP: $(hostname -I)"
+    print_header ""
+fi
