@@ -1,0 +1,13 @@
+{
+    "app.beta": true,
+    "app.hideMenubarIcon": true,
+    "autocomplete.ai.enabled": true,
+    "autocomplete.firstTokenCompletion": false,
+    "autocomplete.fuzzySearch": false,
+    "autocomplete.height": 300,
+    "autocomplete.keybindings.enter": "insertSelected",
+    "autocomplete.keybindings.tab": "insertCommonPrefix",
+    "autocomplete.theme": "system",
+    "autocomplete.width": 800,
+    "telemetry.disabled": true
+}
