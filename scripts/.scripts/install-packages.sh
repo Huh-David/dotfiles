@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Path: scripts/.scripts/install-packages.sh
+
 # check which platform we are on (linux or mac)
 platform=$(uname)
 isMac() {
@@ -9,10 +11,11 @@ isMac() {
 installPackage() {
     command=$1
     url=$2
+    unattended=$3
 
     if ! command -v $command &> /dev/null; then
         echo "$command is not installed. Installing $command..."
-        /bin/bash -c "$(curl -fsSL $url)"
+        /bin/bash -c "$(curl -fsSL $url)" $unattended
     fi
 }
 
@@ -32,8 +35,13 @@ else
     fi
 
     apt update
-    apt install $general_packages
+    apt install $general_packages -y
 fi
 
-installPackage "oh-my-zsh" "https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
+installPackage "oh-my-zsh" "https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh" "--unattended"
 installPackage "nvm" "https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh"
+
+echo "Packages installed successfully"
+
+# run stow-dotfiles.sh
+./stow-dotfiles.sh

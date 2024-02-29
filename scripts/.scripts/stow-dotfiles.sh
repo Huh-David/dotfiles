@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Path: scripts/.scripts/stow-dotfiles.sh
+
 # check which platform we are on (linux or mac)
 platform=$(uname)
 isMac() {
@@ -22,3 +24,6 @@ fi
 for dotfile in $dotfiles; do
     stow $dotfile -d $sourceDir -t $targetDir
 done
+
+echo "Dotfiles stowed successfully"
+```
