@@ -1,9 +1,23 @@
 #!/bin/bash
 
-dotfiles="zsh fig scripts"
+# check which platform we are on (linux or mac)
+platform=$(uname)
+isMac() {
+    [ "$platform" == "Darwin" ]
+}
+
+macDotfiles="fig"
+linuxDotfiles=""
+dotfiles="zsh scripts"
 
 sourceDir=$(pwd)
 targetDir=$HOME
+
+if isMac; then
+    dotfiles="$dotfiles $macDotfiles"
+else
+    dotfiles="$dotfiles $linuxDotfiles"
+fi
 
 for dotfile in $dotfiles; do
     stow $dotfile -d $sourceDir -t $targetDir
