@@ -118,8 +118,12 @@ export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+# zoxide
 eval "$(zoxide init zsh)"
 alias y='z'
+
+# eza (maintained version of exa, a modern replacement for ls)
+alias ls='eza -lh'
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
