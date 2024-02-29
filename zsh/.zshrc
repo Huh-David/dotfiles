@@ -148,7 +148,7 @@ if [ "$(uname)" = "Darwin" ]; then
   source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
 
-LINE_LENGTH=35
+LINE_LENGTH=45
 
 # Function to print a formatted line
 print_line() {
@@ -204,6 +204,6 @@ else
     print_line "Uptime: $(uptime | awk '{print $3,$4}' | sed 's/,//')"
     print_header "Network"
     print_line "Hostname: $(hostname)"
-    print_line "IP: $(hostname -I)"
+    print_line "IP: $(hostname -I | awk '{print $1}')"
     print_header ""
 fi
