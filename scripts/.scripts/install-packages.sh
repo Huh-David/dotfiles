@@ -46,6 +46,3 @@ installPackage "oh-my-zsh" "https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/
 installPackage "nvm" "https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh"
 
 echo "Packages installed successfully"
-
-# run stow-dotfiles.sh
-./stow-dotfiles.sh
