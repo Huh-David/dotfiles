@@ -26,4 +26,3 @@ for dotfile in $dotfiles; do
 done
 
 echo "Dotfiles stowed successfully"
-```

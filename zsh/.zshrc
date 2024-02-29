@@ -123,7 +123,13 @@ eval "$(zoxide init zsh)"
 alias y='z'
 
 # eza (maintained version of exa, a modern replacement for ls)
-alias ls='eza -lh'
+# if mac, use eza, else use exa
+# alias ls='eza -lh'
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  alias ls='eza -lh'
+else
+  alias ls='exa -lh'
+fi
 
 # bat (a cat clone with wings)
 alias cat='bat'

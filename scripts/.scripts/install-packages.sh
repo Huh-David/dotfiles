@@ -19,12 +19,15 @@ installPackage() {
     fi
 }
 
-general_packages="zsh git zsh-autosuggestions zoxide fzf stow eza bat"
+general_packages="zsh git zsh-autosuggestions zoxide fzf stow bat"
+macos_packages="eza"
+linux_packages="exa"
 
 if isMac; then
     installPackage "brew" "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
 
     brew install $general_packages 
+    brew install $macos_packages
 
     installPackage "fig" "https://repo.fig.io/scripts/install-headless.sh "
 else
@@ -36,6 +39,7 @@ else
 
     apt update
     apt install $general_packages -y
+    apt install $linux_packages -y
 fi
 
 installPackage "oh-my-zsh" "https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh" "--unattended"
