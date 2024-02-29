@@ -102,10 +102,6 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-isMac() {
-    [ "$(uname)" == "Darwin" ]
-}
-
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -113,7 +109,8 @@ export NVM_DIR="$HOME/.nvm"
 # Load Angular CLI autocompletion.
 source <(ng completion script)
 
-if isMac; then
+# if [ "$(uname)" == "Darwin" ]; then  //  replace with uname === "Darwin"
+if [ "$(uname)" = "Darwin" ]; then
   export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 fi
 
@@ -130,14 +127,14 @@ alias y='z'
 
 # eza (maintained version of exa, a modern replacement for ls)
 # if mac, use eza, else use exa
-if isMac; then
+if [ "$(uname)" = "Darwin" ]; then
   alias ls='eza -lh'
 else
   alias ls='exa -lh'
 fi
 
 # bat (a cat clone with wings)
-if isMac; then
+if [ "$(uname)" = "Darwin" ]; then
   alias cat='bat'
 else 
   alias cat='batcat'
@@ -147,6 +144,47 @@ fi
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
 
 # source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-if isMac; then
+if [ "$(uname)" = "Darwin" ]; then
   source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
+
+LINE_LENGTH=35
+
+# Function to print a formatted line
+print_line() {
+  local content="$1"
+  local pipe="|"
+  local padding_length=$(($LINE_LENGTH - ${#content}))  # Adjust the total line length as needed
+
+  echo "| $content$(printf ' %.0s' $(seq 1 $padding_length)) $pipe"
+}
+
+# Function to print the header line
+print_header() {
+  local content="$1"
+  local equal_signs=$(printf '=%.0s' $(seq 1 $(($LINE_LENGTH + 2))))  # Adjust the total line length as needed
+  local padding_length=$(($LINE_LENGTH - ${#content} - 2))  # Adjust the total line length as needed
+
+  echo "|$equal_signs|"
+
+  if [ -n "$content" ]; then
+    print_line "> $content"
+  fi
+}
+
+# Print out system information
+print_header "System Information"
+print_line "OS: $(uname)"
+print_line "Shell: $SHELL"
+print_line "ZSH version: $ZSH_VERSION"
+print_line "Username: $(whoami)"
+print_header "Hardware"
+print_line "CPU: $(sysctl -n machdep.cpu.brand_string)"
+print_line "Memory: $(sysctl -n hw.memsize)"
+print_line "Disk: $(df -h / | awk 'NR==2{print $4}')"
+print_line "Uptime: $(uptime | awk '{print $3,$4}' | sed 's/,//')"
+print_line "Battery: $(pmset -g batt | grep -Eo '\d+%' | cut -d% -f1)"
+print_header "Network"
+print_line "Hostname: $(hostname)"
+print_line "IP: $(ipconfig getifaddr en0)"
+print_header ""
