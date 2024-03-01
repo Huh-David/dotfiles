@@ -121,32 +121,16 @@ fi
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-# zoxide (a smarter cd)
-eval "$(zoxide init zsh)"
-alias y='z'
-
-# eza (maintained version of exa, a modern replacement for ls)
-# if mac, use eza, else use exa
-if [ "$(uname)" = "Darwin" ]; then
-  alias ls='eza -lh'
-else
-  alias ls='exa -lh'
-fi
-
-# bat (a cat clone with wings)
-if [ "$(uname)" = "Darwin" ]; then
-  alias cat='bat'
-else 
-  alias cat='batcat'
-fi
-
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
 
-# source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 if [ "$(uname)" = "Darwin" ]; then
   source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
+
+# ###############
+# STARTUP MESSAGE
+# ###############
 
 LINE_LENGTH=45
 
@@ -172,9 +156,7 @@ print_header() {
   fi
 }
 
-
-
-    # Print out system information
+# Print out system information
 if [ "$(uname)" = "Darwin" ]; then
     print_header "System Information"
     print_line "OS: $(uname)"
@@ -206,4 +188,26 @@ else
     print_line "Hostname: $(hostname)"
     print_line "IP: $(hostname -I | awk '{print $1}')"
     print_header ""
+fi
+
+# ###############
+#     ALIASES
+# ###############
+
+# zoxide (a smarter cd)
+eval "$(zoxide init zsh)"
+alias y='z'
+
+# eza (maintained version of exa, a modern replacement for ls)
+if [ "$(uname)" = "Darwin" ]; then
+  alias ls='eza -lh'
+else
+  alias ls='exa -lh'
+fi
+
+# bat (a cat clone with wings)
+if [ "$(uname)" = "Darwin" ]; then
+  alias cat='bat'
+else 
+  alias cat='batcat'
 fi
