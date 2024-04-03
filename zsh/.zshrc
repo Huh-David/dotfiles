@@ -187,6 +187,11 @@ else
     print_header ""
 fi
 
+[[ -f "$HOME/fig-export/dotfiles/dotfile.zsh" ]] && builtin source "$HOME/fig-export/dotfiles/dotfile.zsh"
+
+# CodeWhisperer post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh"
+
 # ###############
 #     ALIASES
 # ###############
@@ -196,8 +201,9 @@ eval "$(zoxide init zsh)"
 alias y='z'
 
 # eza (maintained version of exa, a modern replacement for ls)
+
 if [ "$(uname)" = "Darwin" ]; then
-  alias ls='eza -lh'
+    alias ls='eza -lh'
 else
   alias ls='exa -lh'
 fi
@@ -208,9 +214,3 @@ if [ "$(uname)" = "Darwin" ]; then
 else 
   alias cat='batcat'
 fi
-
-
-[[ -f "$HOME/fig-export/dotfiles/dotfile.zsh" ]] && builtin source "$HOME/fig-export/dotfiles/dotfile.zsh"
-
-# CodeWhisperer post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh"
