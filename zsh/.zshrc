@@ -214,3 +214,6 @@ if [ "$(uname)" = "Darwin" ]; then
 else 
   alias cat='batcat'
 fi
+
+precmd () { echo -n "\x1b]1337;CurrentDir=$(pwd)\x07" }
+
