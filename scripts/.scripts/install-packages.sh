@@ -45,4 +45,7 @@ fi
 installPackage "oh-my-zsh" "https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh" "--unattended"
 installPackage "nvm" "https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh"
 
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+
 echo "Packages installed successfully"
