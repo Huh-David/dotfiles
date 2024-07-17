@@ -10,7 +10,7 @@ isMac() {
 
 macDotfiles="fig"
 linuxDotfiles=""
-dotfiles="zsh scripts vim"
+dotfiles="zsh scripts vim tmux"
 
 sourceDir=$(pwd)
 targetDir=$HOME
