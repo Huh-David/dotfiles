@@ -1,3 +1,4 @@
+# Amazon Q pre block. Keep at the top of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -39,8 +40,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# Load Angular CLI autocompletion.
-source <(ng completion script)
+# # Load Angular CLI autocompletion.
+# source <(ng completion script)
 
 # if [ "$(uname)" == "Darwin" ]; then  //  replace with uname === "Darwin"
 if [ "$(uname)" = "Darwin" ]; then
@@ -82,6 +83,7 @@ fi
 precmd () { echo -n "\x1b]1337;CurrentDir=$(pwd)\x07" }
 
 if [ "$(uname)" = "Darwin" ]; then
-    [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
-fi
+    fi
 
+# Amazon Q post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
