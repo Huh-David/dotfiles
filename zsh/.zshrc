@@ -1,17 +1,35 @@
-# Kiro CLI pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh"
+
 export ZSH="$HOME/.oh-my-zsh"
 
-ZSH_THEME="afowler"
+ZSH_THEME="amuse"
 
 zstyle ':omz:update' mode auto      # update automatically without asking
 
+# Docker CLI completions (must be on fpath before compinit)
+fpath=(/Users/davidhuh/.docker/completions $fpath)
+
+# fzf-tab must load after compinit, before the ZLE-wrapping plugins below
 plugins=(
     git
+    fzf-tab
+    zsh-autosuggestions
     zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
+
+# fzf-tab configuration
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' menu no
+zstyle ':completion:*:git-checkout:*' sort false
+zstyle ':fzf-tab:*' switch-group '<' '>'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+
+# zsh-autosuggestions: inline ghost text from history (accept with Right arrow)
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+bindkey '^ ' autosuggest-accept  # Ctrl+Space accepts the whole suggestion
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -34,8 +52,6 @@ fi
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-[[ -f "$HOME/fig-export/dotfiles/dotfile.zsh" ]] && builtin source "$HOME/fig-export/dotfiles/dotfile.zsh"
-
 if [ "$(uname)" = "Darwin" ]; then
     alias ls='eza'
 else
@@ -50,12 +66,6 @@ fi
 
 precmd () { echo -n "\x1b]1337;CurrentDir=$(pwd)\x07" }
 
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/davidhuh/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
-# End of Docker CLI completions
-
 # pnpm
 export PNPM_HOME="/Users/davidhuh/Library/pnpm"
 case ":$PATH:" in
@@ -64,8 +74,4 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-# Added by Antigravity
-export PATH="/Users/davidhuh/.antigravity/antigravity/bin:$PATH"
-
-# Kiro CLI post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
+eval "$(direnv hook zsh)"
